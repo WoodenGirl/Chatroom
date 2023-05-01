@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Sign Up{% endblock %}
+{% block nav %}{% endblock %}
+
+{% block content %}
+    
+    <div>
+        <img src="{{ url_for('auth.static', filename='logo.png') }}" class="image">
+        <div class="content">
+            Welcome to <span class="catchat-text">CatChat</span>!
+        </div>
+    </div>
+            
+    <form method="post" action="{{ url_for('auth.register') }}">
+        <div class="field eight wide">
+            <label>Nickname</label>
+            <input name="nickname" placeholder="Nickname" type="text">
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <input name="email" placeholder="greyli.py@gmail.com" type="text">
+        </div>
+        <div class="field">
+            <label>Password</label>
+            <input name="password" placeholder="Password" type="password">
+        </div>
+        <div class="field">
+            <label>Confirm Password</label>
+            <input name="password2" placeholder="Password" type="password">
+        </div>
+        <div class="field">
+            <input tabindex="0" class="hidden" type="checkbox" checked="">
+            <label>I agree to the Terms and Conditions</label>
+        </div>
+        <input id="submit" name="submit" type="submit" value="Submit">Regist
+    </form>
+
+    <!-- {% if error %}
+        <div>{{ error }}</div>
+    {% endif %} -->
+
+    <div >
+        Already signed up? <a href="{{ url_for('auth.login') }}">Login here</a> instead.
+    </div>
+        
+{% endblock %}

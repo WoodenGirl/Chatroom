@@ -1,0 +1,49 @@
+<html>
+<head>
+    {% block head %}
+        <title>{% block title %}{% block page_title %}{% endblock %} - Chatroom{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{{ url_for('chat.static', filename='logo.png') }}">
+        <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/style.css') }}">
+    {% endblock %}
+</head>
+<body>
+
+{% block nav %}
+    <div >
+        <!-- logo 网站名 -->
+        <a href="{{ url_for('chat.index') }}">
+            <img src="{{ url_for('chat.static', filename='logo.png') }}">
+            <span>Chatroom</span>
+        </a>
+
+        <!-- 在线人数 -->
+        <!-- <div class="item">
+            <div title="Online users">
+                <i class="user icon"></i> <span id="user-count">0</span> / {{ user_amount }}
+            </div>
+        </div> -->
+
+        <!-- 用户名/sign in -->
+        <div >
+            {% if current_user.is_authenticated %}
+                <div class="item">
+                    <p>{{ current_user.nickname }}</p>
+                </div>
+            {% else %}
+                <div class="item">
+                    <a href="{{ url_for('auth.login') }}">Sign in</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('auth.static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('chat.static', filename='js/script.js') }}"></script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,27 @@
+<div>
+    <!-- 头像-->
+    <div>
+        <img src="{{ message.author.avatar(64) }}">
+    </div>
+    <!-- 昵称、时间戳 -->
+    <div>
+        <span class="nickname">{{ message.author.nickname }}</span>
+        <small class="timestamp">{{ moment(message.timestamp).format('lll') }}</small>
+    </div>
+    <!-- 消息 -->
+    <div class="msg">
+        <span class="message-body">{{ message.body }}</span>
+    </div>
+    <!-- 管理消息 -->
+    {% if current_user.is_authenticated %}
+        <!-- 引用 -->
+        <div class="quoteMessage">Quote</div>
+        <!-- 删除 -->
+        {% if current_user == message.author or current_user.is_admin %}
+            <div class="deleteMessage"
+                 data-href="{{ url_for('chat.delete_message', message_id=message.id) }}">
+                Delete
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

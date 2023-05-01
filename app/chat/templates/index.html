@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Chatroom{% endblock %}
+
+{% block right %}
+    <div>
+        <div>聊天室</div>
+        <!-- 在线人数 -->
+        <div>
+            <span id="user-count">0</span> / {{ user_amount }}
+        </div>
+        <div class="users">
+            {% include '_users.html' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div >
+        <!-- 显示消息 -->
+        <div class="messages">
+            {% include '_messages.html' %}
+        </div>
+        <!-- 发送消息 -->
+        <div>
+            <!-- 如果用户登录，展示头像与消息框 -->
+            {% if current_user.is_authenticated %}
+                <img src="{{ current_user.avatar(64) }}">
+                <textarea rows="2" id="message-textarea" placeholder="Write your message here... Enter to send"></textarea>
+            <!-- 否则，显示登录、注册链接 -->
+            {% else %}
+                <div>Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                    <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
+                </div>
+            {% endif %}
+        </div>                         
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        var socket = io('/');
+    </script>
+{% endblock %}
