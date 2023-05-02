@@ -23,11 +23,12 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFCATIONS = False
     
     # 数据库查询分析
-    SQLALCHEMY_RECORD_QUERIES = True
-    FLASKY_SLOW_DB_QUERY_TIME = 1000
+    # SQLALCHEMY_RECORD_QUERIES = True
+    # FLASKY_SLOW_DB_QUERY_TIME = 1000
 
     # 设置缓存
     CACHE_NO_NULL_WARNING = True
-    # CACHE_TYPE = simple
+    CACHE_TYPE = 'simple'
 
-    # ASSETS_DEBUG = True
+    # 静态资源优化
+    ASSETS_DEBUG = True

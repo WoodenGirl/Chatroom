@@ -97,8 +97,14 @@
         DATABASE_URL = 'xxx'
         SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
         ````
+- 为静态资源打包后报错：
+    `The referenced blueprint <Flask 'Chatroom'> has no static folder.`
+  解决：声明根部静态资源位置`app = Flask('Chatroom', static_folder='asserts')`
 
-## success
-+ 改善pythonanywhere上的socket速度
+## succes
++ 试图改善pythonanywhere上的socket速度，
+    1. 查找数据库的慢查询语句
+    2. 为页面设置缓存
+    3. 静态资源打包
 
 

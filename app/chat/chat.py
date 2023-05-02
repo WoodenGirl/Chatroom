@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, abort, redirect, url_for, request
 from flask_login import current_user
 from flask_socketio import emit
 from app.models import Message, User
-from app.extensions import socketio, db
+from app.extensions import socketio, db, cache
 
 chat_blue = Blueprint('chat', __name__, template_folder="templates", static_folder="static")
 
@@ -46,6 +46,7 @@ def new_message(message_body):
 
 @chat_blue.route('/')
 @chat_blue.route('/index')
+@cache.cached(timeout=60)
 def index():
     users = User.query.all()
     user_amount = User.query.count() 

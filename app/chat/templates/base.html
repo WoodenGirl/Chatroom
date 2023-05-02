@@ -4,7 +4,9 @@
         <title>{% block title %}{% block page_title %}{% endblock %} - Chatroom{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="{{ url_for('chat.static', filename='logo.png') }}">
-        <link rel="stylesheet" href="{{ url_for('chat.static', filename='css/style.css') }}">
+        {% assets "css_all" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
     {% endblock %}
 </head>
 <body>
@@ -38,10 +40,10 @@
 {% block content %}{% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('chat.static', filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('chat.static', filename='js/socket.io.js') }}"></script>
-    <script src="{{ url_for('chat.static', filename='js/script.js') }}"></script>
-    {{ moment.include_moment(local_js=url_for('chat.static', filename='js/moment-with-locales.min.js')) }}
+    {% assets "js_all" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    
     <script type="text/javascript">
         var root_url = "{{ url_for('chat.index') }}";
         var current_user_id = {{ current_user.id|default(0) }};

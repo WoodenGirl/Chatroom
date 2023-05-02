@@ -10,7 +10,7 @@ from app.config import Config
 
 
 def create_app():
-    app = Flask('Chatroom', static_folder=None)
+    app = Flask('Chatroom', static_folder='asserts')
     app.config.from_object(Config)
     
     register_extensions(app)
@@ -110,16 +110,16 @@ def register_request_handlers(app):
         return response
 
 def register_asserts():
-    css = Bundle('chat/static/css/style.css',
-                 'auth/static/css/style.css',
-                 filter='cssmin', output='wooden/packed.css')
+    css = Bundle('chat/css/style.css',
+                 'auth/css/style.css',
+                 filters='cssmin', output='assests/packed.css')
     
-    js = Bundle('chat/static/js/jquery.js',
-                'chat/static/js/moment-with-locales.min.js',
-                'chat/static/js/script.js',
-                'chat/static/js/socket.io.js',
-                'auth/static/js/script.js',
-                'auth/static/js/script.js',
-                 filter='jsmin', output='wooden/packed.js')
+    js = Bundle('chat/js/jquery.js',
+                'chat/js/moment-with-locales.min.js',
+                'chat/js/script.js',
+                'chat/js/socket.io.js',
+                'auth/js/script.js',
+                'auth/js/script.js',
+                 filters='jsmin', output='assests/packed.js')
     asserts.register('js_all', js)
     asserts.register('css_all', css)
