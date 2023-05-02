@@ -39,7 +39,7 @@
 
 {% block scripts %}
     <script src="{{ url_for('chat.static', filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('chat.static', filename='js/socket.io.min.js') }}"></script>
+    <script src="{{ url_for('chat.static', filename='js/socket.io.js') }}"></script>
     <script src="{{ url_for('chat.static', filename='js/script.js') }}"></script>
     {{ moment.include_moment(local_js=url_for('chat.static', filename='js/moment-with-locales.min.js')) }}
     <script type="text/javascript">

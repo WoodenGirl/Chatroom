@@ -24,7 +24,7 @@
 
 - socket报错：
     `The WebSocket transport is not available, you must install a WebSocket server that is compatible with your async mode to enable it. See the documentation for details. (further occurrences of this error will be logged with level INFO)`
--环境： pip install eventlet
+-原因： 安装了eventlet, 用flask_run命令运行
 -解决： 指定异步模式socketio.init_app(app, async_mode='eventlet') 
 
 - 指定异步模式后报错：
@@ -34,10 +34,35 @@
 - 修改运行语句后使用flask run命令依然报错
 -解决： 通过python start.py运行或直接通过编辑器运行该文件
 
-- python start.py 突然运行不了了
--解决：以上问题都是因为下载了eventlet导致，卸载eventlet, 下载simple-websocket即可
+- python start.py 终端一直在初始化
+    `Server initialized for eventlet.`
+-解决： (1) 卸载eventlet,安装simple-websocket
+        (2) 用生产模式运行
+        ````
+        from app import create_app
+        from eventlet import wsgi
+        import eventlet
+        app = create_app()
+        wsgi.server(eventlet.listen(('127.0.0.1', 5000)), app)
+        ````
+
 
 ## success：
 + 实现服务端接受消息后再广播出去
 + 实现客户端接受服务端广播的消息并显示在页面上
 
+
+
+# 2023/5/1
+## error：
+- 部署后报错：
+    `WebSocket connection to 'ws://xxxx'failed`
+- 解决：在socket.io.js文件中将'ws:'替换为'http:'
+        ctrl+f 找到这行代码`var uri = this.uri()`，在后面追加
+        `if (uri) 
+            uri.replace('ws:', 'http:')`
+
+## success：
++ 完成用户人员展示，上线昵称后面+绿点 下线去掉绿点
++ 上传到github
++ 在pythonanywhere部署

@@ -17,7 +17,7 @@ def create_app():
     # register_errors(app)
     register_commands(app)
 
-    return app, socketio
+    return app
 
 def register_extensions(app):
     db.init_app(app)
