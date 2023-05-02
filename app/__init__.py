@@ -1,9 +1,10 @@
 import click
-from flask import Flask, render_template
-
+from flask import Flask, render_template, current_app
+from flask_sqlalchemy import get_debug_queries
+from flask_assets import Bundle
 from app.chat.chat import chat_blue
 from app.auth.auth import auth_blue
-from app.extensions import db, migrate, socketio, login_manager, moment
+from app.extensions import db, migrate, socketio, login_manager, moment, cache, asserts
 from app.models import User, Message
 from app.config import Config
 
@@ -16,15 +17,19 @@ def create_app():
     register_blueprints(app)
     # register_errors(app)
     register_commands(app)
+    # register_request_handlers(app)
+    register_asserts()
 
     return app
 
 def register_extensions(app):
     db.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
     socketio.init_app(app) 
     login_manager.init_app(app)
     moment.init_app(app)
+    cache.__init__(app)
+    asserts.__init__(app)
 
 def register_blueprints(app):
     app.register_blueprint(chat_blue)
@@ -60,21 +65,22 @@ def register_commands(app):
 
         from faker import Faker
 
-        fake = Faker()
+        fake = Faker('zh_CN')
 
         click.echo('Initializing the database...')
         db.drop_all()
         db.create_all()
 
         click.echo('Forging the data...')
-        admin = User(nickname='Grey Li', email='admin@helloflask.com')
-        admin.set_password('helloflask')
+        admin = User(nickname='123Wooden', email='admin@123Wooden.com')
+        admin.set_password('123Wooden')
         db.session.add(admin)
         db.session.commit()
 
         click.echo('Generating users...')
         for i in range(10):
-            user = User(nickname=fake.name())
+            user = User(nickname=fake.name(), email=fake.email())
+            user.set_password(fake.password())
             db.session.add(user)
             try:
                 db.session.commit()
@@ -92,5 +98,28 @@ def register_commands(app):
 
         db.session.commit()
         click.echo('Done.')
+    
 
+def register_request_handlers(app):
+    @app.after_app_request
+    def query_profiler(response):
+        for query in get_debug_queries():
+            if query.duration >= current_app.config['FLASKY_SLOW_DB_QUERY_TIME']:
+                current_app.logger.warning('Slow query:{}\nParameters:{}\nDuration:{}\nContext:{}\n'.
+                                        format(query.statement, query.parameters, query.duration, query.context))
+        return response
 
+def register_asserts():
+    css = Bundle('chat/static/css/style.css',
+                 'auth/static/css/style.css',
+                 filter='cssmin', output='wooden/packed.css')
+    
+    js = Bundle('chat/static/js/jquery.js',
+                'chat/static/js/moment-with-locales.min.js',
+                'chat/static/js/script.js',
+                'chat/static/js/socket.io.js',
+                'auth/static/js/script.js',
+                'auth/static/js/script.js',
+                 filter='jsmin', output='wooden/packed.js')
+    asserts.register('js_all', js)
+    asserts.register('css_all', css)

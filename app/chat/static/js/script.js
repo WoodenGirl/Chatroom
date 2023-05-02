@@ -24,26 +24,26 @@ $(document).ready(function () {
         scrollToBottom();     // 进皮条滚动到底部
     });
 
+    // 统计上线人数
+    socket.on('user count', function (data) {
+        $('#user-count').html(data.count);
+    })
+
     // 上线
     socket.on('online', function (data) {
-        // 统计上线人数
-        $('#user-count').html(data.count);
-        // 更改上线人员的样式（可以通过添加类名实现）
-        var $user =  $('.user');
-        if ($user.data('id') == data.online_id) {
-            $user.append('<div>绿点</div>')
-        }            
+        $user_status = $('.user_status')
+        // if ($user_status.data('id') === data.online_id) {
+        //      $user_status.append('<div>绿点</div>')
+        // }        
+        
     });
+
     // 下线
     socket.on('offline', function (data) {
-        // 统计上线人数
-        $('#user-count').html(data.count); 
-        // 更改下线人员的样式（可以通过移除类名实现）
-        var $user =  $('.user');
-        if ($user.data('id') == data.online_id) {
-            $user.remove('<div>绿点</div>')
-        }            
+        if ($user_status.data('id') === data.online_id) {
+        } 
     });
+
 
     // 引用消息
     $('.messages').on('click', '.quoteMessage', function () {

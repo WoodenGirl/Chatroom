@@ -36,8 +36,8 @@
 
 - python start.py 终端一直在初始化
     `Server initialized for eventlet.`
--解决： (1) 卸载eventlet,安装simple-websocket
-        (2) 用生产模式运行
+-解决： 第一种方式：安装simple-websocket, 使用flask run运行
+        第二种方式： 切换生产模式，用python start.py运行 
         ````
         from app import create_app
         from eventlet import wsgi
@@ -45,13 +45,17 @@
         app = create_app()
         wsgi.server(eventlet.listen(('127.0.0.1', 5000)), app)
         ````
-
+- tips: ````
+        在下载了eventlet的情况下
+        使用python start.py运行 使用的是eventlet
+        使用flask run命令 使用的是threading
+        ````
 
 ## success：
 + 实现服务端接受消息后再广播出去
 + 实现客户端接受服务端广播的消息并显示在页面上
 
-
+---
 
 # 2023/5/1
 ## error：
@@ -66,3 +70,35 @@
 + 完成用户人员展示，上线昵称后面+绿点 下线去掉绿点
 + 上传到github
 + 在pythonanywhere部署
+    ````
+    # 部署配置
+    # import sys
+    # path = '/home/123Wooden/Chatroom'
+    # if path not in sys.path:
+    #     sys.path.append(path)
+    # from start import app as applicaiton
+    ````
+
+---
+
+# 2023/5/2
+## error
+- 配置pythonanywhere的数据库报错：
+    `AttributeError: 'NoneType' object has no attribute 'get_engine'`
+  解决：````
+        migrate = Migrate()
+        migrate.init_app(app, db)
+        ````
+- 配置pythonanywhere的数据库报错：
+    `AttributeError: 'NoneType' object has no attribute 'drivername'`
+  解决：````
+        SQLALCHEMY_DATABASE_URI = 'xxx'
+        or
+        DATABASE_URL = 'xxx'
+        SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+        ````
+
+## success
++ 改善pythonanywhere上的socket速度
+
+

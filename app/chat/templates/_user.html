@@ -1,5 +1,4 @@
-<div class="user" 
-     data-id="{{ user.id }}">
+<div class="user">
     <!-- 头像-->
     <div>
         <img src="{{ user.avatar(16) }}">
@@ -9,7 +8,7 @@
         <span class="nickname">{{ user.nickname }}</span>
     </div>
     <!-- 管理图标 -->
-    {% if current_user.is_admin %}
+    {% if user.is_admin %}
         <div>管理员图标</div>
     {% endif %}
 </div>

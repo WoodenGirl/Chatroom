@@ -15,20 +15,18 @@ def connect():
     global online_users
     if current_user.is_authenticated and current_user.id not in online_users:
         online_users.append(current_user.id)
-    # 上线
-    emit('online', {
-        'count': len(online_users), 
-        'online_id': current_user.id
-        }, broadcast=True)
-    
+        # 上线
+        emit('online', {'online_id': current_user.id}, broadcast=True)
+    emit('user count', {'count': len(online_users)}, broadcast=True)
 
 @socketio.on('disconnect')
 def disconnect():
     global online_users
     if current_user.is_authenticated and current_user.id in online_users:
         online_users.remove(current_user.id)
-    # 下线
-    emit('offline', {'count': len(online_users), 'offline_id': current_user.id}, broadcast=True)
+        # 下线
+        emit('offline', {'offline_id': current_user.id}, broadcast=True)
+    emit('user count', {'count': len(online_users)}, broadcast=True)
 
 @socketio.on('new message')
 def new_message(message_body): 

@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
 
     @property
     def is_admin(self):
-        return self.email == current_app.config['CATCHAT_ADMIN_EMAIL']
+        return self.email == current_app.config['CHATROOM_ADMIN_EMAIL']
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
