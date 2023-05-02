@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_socketio import SocketIO
 from flask_login import LoginManager
 from flask_moment import Moment
 
 
 db = SQLAlchemy()
+migrate = Migrate(db)
 socketio = SocketIO(logger=True, engineio_logger=True)
 moment = Moment()
 login_manager = LoginManager()

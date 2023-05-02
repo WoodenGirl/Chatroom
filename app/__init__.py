@@ -3,7 +3,7 @@ from flask import Flask, render_template
 
 from app.chat.chat import chat_blue
 from app.auth.auth import auth_blue
-from app.extensions import db, socketio, login_manager, moment
+from app.extensions import db, migrate, socketio, login_manager, moment
 from app.models import User, Message
 from app.config import Config
 
@@ -21,6 +21,7 @@ def create_app():
 
 def register_extensions(app):
     db.init_app(app)
+    migrate.init_app(app)
     socketio.init_app(app) 
     login_manager.init_app(app)
     moment.init_app(app)
