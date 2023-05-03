@@ -1,24 +1,47 @@
-import click
-from flask import Flask, render_template, current_app
+import click, os, logging, jinja2
+from flask import Flask, render_template, current_app, redirect, url_for
 from flask_sqlalchemy import get_debug_queries
 from flask_assets import Bundle
+from logging.handlers import RotatingFileHandler
 from app.chat.chat import chat_blue
 from app.auth.auth import auth_blue
 from app.extensions import db, migrate, socketio, login_manager, moment, cache, asserts
 from app.models import User, Message
-from app.config import Config
+from app.config import config
+
+class MyApp(Flask):
+    def __init__(
+        self, 
+        import_name: str,
+    ):
+        Flask.__init__(self, __name__)
+        self.jinja_loader = jinja2.ChoiceLoader([
+            self.jinja_loader,
+            jinja2.PrefixLoader({}, delimiter = ".")
+        ])
+    def create_global_jinja_loader(self):
+        return self.jinja_loader
+
+    def register_blueprint(self, bp):
+        Flask.register_blueprint(self, bp)
+        self.jinja_loader.loaders[1].mapping[bp.name] = bp.jinja_loader
 
 
-def create_app():
-    app = Flask('Chatroom', static_folder='asserts')
-    app.config.from_object(Config)
+def create_app(config_name=None):
+    if config_name is None:
+        config_name = os.getenv('FLASK_CONFIG', 'development')
+    
+    app = MyApp('Chatroom')
+    app.config.from_object(config[config_name])
     
     register_extensions(app)
     register_blueprints(app)
-    # register_errors(app)
+    register_index(app)
+    register_errors(app)
     register_commands(app)
     # register_request_handlers(app)
     register_asserts()
+    register_logger(app)
 
     return app
 
@@ -34,6 +57,11 @@ def register_extensions(app):
 def register_blueprints(app):
     app.register_blueprint(chat_blue)
     app.register_blueprint(auth_blue)
+
+def register_index(app):
+    @app.route('/')
+    def index():
+        return redirect(url_for('chat.index'))
 
 def register_errors(app):
     @app.errorhandler(404)
@@ -65,7 +93,7 @@ def register_commands(app):
 
         from faker import Faker
 
-        fake = Faker('zh_CN')
+        fake = Faker()
 
         click.echo('Initializing the database...')
         db.drop_all()
@@ -110,16 +138,27 @@ def register_request_handlers(app):
         return response
 
 def register_asserts():
-    css = Bundle('chat/css/style.css',
-                 'auth/css/style.css',
-                 filters='cssmin', output='assests/packed.css')
+    css = Bundle('css/style.css',
+                 'auth/css/auth.css',
+                 'chat/css/chat.css',
+                 filters='cssmin', output='gen/packed.css')
     
-    js = Bundle('chat/js/jquery.js',
-                'chat/js/moment-with-locales.min.js',
-                'chat/js/script.js',
-                'chat/js/socket.io.js',
-                'auth/js/script.js',
-                'auth/js/script.js',
-                 filters='jsmin', output='assests/packed.js')
+    js = Bundle('js/jquery.js',
+                'js/socket.io.js',
+                'auth/js/auth.js',
+                'chat/js/chat.js',
+                 filters='jsmin', output='gen/packed.js')
     asserts.register('js_all', js)
     asserts.register('css_all', css)
+
+def register_logger(app):
+    app.logger.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+   
+    file_handler = RotatingFileHandler('logs/chatroom.log', maxBytes=10 * 1024 * 1024, backupCount=20)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    if not app.debug:
+        app.logger.addHandler(file_handler)

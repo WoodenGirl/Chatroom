@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, abort, redirect, url_for, request
+from flask import Blueprint, render_template, abort, request, current_app
 from flask_login import current_user
 from flask_socketio import emit
 from app.models import Message, User
 from app.extensions import socketio, db, cache
 
-chat_blue = Blueprint('chat', __name__, template_folder="templates", static_folder="static")
+chat_blue = Blueprint('chat', __name__, url_prefix="/chat", template_folder="templates", static_folder="static")
 
 online_users = []
 
@@ -35,7 +35,7 @@ def new_message(message_body):
     db.session.commit()
     # 新消息
     emit('new message', { 
-          'message_html': render_template('_message.html', message=message),
+          'message_html': render_template('chat._message.html', message=message),
           'message_body': message_body,
           'avatar': current_user.avatar(64),
           'nickname': current_user.nickname,
@@ -44,14 +44,17 @@ def new_message(message_body):
 
 # Controller
 
+# 渲染index
+
 @chat_blue.route('/')
-@chat_blue.route('/index')
 @cache.cached(timeout=60)
 def index():
     users = User.query.all()
     user_amount = User.query.count() 
     messages = Message.query.order_by(Message.timestamp.asc())
-    return render_template('index.html', messages=messages, users=users, user_amount=user_amount)
+    return render_template('chat.index.html', messages=messages, users=users, user_amount=user_amount)
+
+# 删除消息
 
 @chat_blue.route('/message/delete/<message_id>', methods=['DELETE'])
 def delete_message(message_id):
@@ -62,9 +65,14 @@ def delete_message(message_id):
     db.session.commit()
     return '', 204
 
+# 无限滑动
 
-
-    
-
+@chat_blue.route('/messages') 
+def get_messages():
+    page = request.args.get('page', 1, type=int)
+    pagination = Message.query.order_by(Message.timestamp.desc()).paginate(
+        page, per_page=current_app.config['CHATROOM_MESSAGE_PER_PAGE'])
+    messages = pagination.items
+    return render_template('chat._messages.html', messages=messages[::-1])
 
     

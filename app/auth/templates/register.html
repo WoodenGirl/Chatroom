@@ -1,39 +1,37 @@
 {% extends 'base.html' %}
 
 {% block page_title %}Sign Up{% endblock %}
-{% block nav %}{% endblock %}
 
 {% block content %}
-    
-    <div>
-        <img src="{{ url_for('auth.static', filename='logo.png') }}" class="image">
-        <div class="content">
-            Welcome to <span class="catchat-text">CatChat</span>!
-        </div>
-    </div>
             
     <form method="post" action="{{ url_for('auth.register') }}">
-        <div class="field eight wide">
-            <label>Nickname</label>
-            <input name="nickname" placeholder="Nickname" type="text">
-        </div>
-        <div class="field">
-            <label>Email</label>
-            <input name="email" placeholder="greyli.py@gmail.com" type="text">
-        </div>
-        <div class="field">
-            <label>Password</label>
-            <input name="password" placeholder="Password" type="password">
-        </div>
-        <div class="field">
-            <label>Confirm Password</label>
-            <input name="password2" placeholder="Password" type="password">
-        </div>
-        <div class="field">
-            <input tabindex="0" class="hidden" type="checkbox" checked="">
-            <label>I agree to the Terms and Conditions</label>
-        </div>
-        <input id="submit" name="submit" type="submit" value="Submit">Regist
+        <div class="wrap">
+            <div class="form">
+                <div class="left">
+                    <video src="{{url_for('auth.static' , filename = 'video.mp4')}}" muted autoplay loop></video>
+                </div>
+                <div class="right">
+                    <div class="right-con">
+                        <h1>Here Register</h1>
+                        <h3>NickName</h3>
+                        <input class="text" name="nickname" placeholder="Nickname" type="text">
+                        <h3>Email</h3>
+                        <input class="text" name="email" placeholder="greyli.py@gmail.com" type="text">
+                        
+                        <h3>PassWord</h3>
+                        <input class="text" name="password" placeholder="Password" type="password">
+
+                        <h3>Confirm PassWord</h3>
+                        <input class="text" name="password2" placeholder="Password" type="password">
+                        
+                        <input tabindex="0" class="hidden" type="checkbox" checked="">
+                        <label>I agree to the Terms and Conditions</label>
+                        
+                        <input class="btn" type="submit" value="Register">
+                    </div>
+                </div>
+            </div>
+        </div> 
     </form>
 
     <!-- {% if error %}

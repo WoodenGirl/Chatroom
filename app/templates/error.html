@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>error - Chatroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ url_for('chat.static', filename='logo.png') }}">
+    {% assets "css_all" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+</head>
+<body>
+    <div >
+        <div>
+            <img src="{{ url_for('static', filename='logo.png') }}" class="image">
+            <span>Chatroom</span> - {{ code }}
+        </div>  
+        <p>{{ description }}</p>
+        <a href="{{ url_for('chat.index') }}">Return Home</a>
+    </div>
+</body>
+</html>
+
+

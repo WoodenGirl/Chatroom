@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app.extensions import db
 from app.models import User
 
-auth_blue = Blueprint('auth', __name__, template_folder="templates", static_folder="static")
+auth_blue = Blueprint('auth', __name__, url_prefix="/auth", template_folder="templates", static_folder="static")
 
 
 @auth_blue.route('/login', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def login():
         flash('Either the email or password was incorrect.')
         return redirect(url_for('.login'))
 
-    return render_template('login.html')
+    return render_template('auth.login.html')
 
 
 @auth_blue.route('/logout')
@@ -66,4 +66,4 @@ def register():
         login_user(user, remember=True)
         return redirect(url_for('chat.index'))
 
-    return render_template('register.html')
+    return render_template('auth.register.html')

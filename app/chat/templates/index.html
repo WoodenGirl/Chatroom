@@ -1,43 +1,77 @@
 {% extends 'base.html' %}
 {% block title %}Chatroom{% endblock %}
 
-{% block right %}
-    <div>
-        <div>聊天室</div>
-        <!-- 在线人数 -->
-        <div>
-            <span id="user-count">0</span> / {{ user_amount }}
+{% block content %}
+    <div class="header">
+        <!-- logo 网站名 -->
+        <div class="logo wrapper">
+            <a href="{{ url_for('chat.index') }}">
+                聊天室
+                <img src="{{url_for('static', filename='logo.ong')}}" alt="">
+            </a>
+            <!-- <h1>聊天室</h1> -->
         </div>
-        <div class="users">
-            {% include '_users.html' %}
+
+        <!-- 用户名/sign in -->
+        <div class="user">
+            {% if current_user.is_authenticated %}
+                <div class="username">
+                    <img src="{{ current_user.avatar(40) }}" alt="">
+                    <p>{{ current_user.nickname }}</p>
+                </div>
+                <a href="{{ url_for('auth.logout') }}">Log out</a>
+            {% else %}
+                
+                    <a href="{{ url_for('auth.login') }}">Sign Up</a>
+                
+            {% endif %}
         </div>
     </div>
-{% endblock %}
 
-{% block content %}
-    <div >
-        <!-- 显示消息 -->
-        <div class="messages">
-            {% include '_messages.html' %}
-        </div>
-        <!-- 发送消息 -->
-        <div>
-            <!-- 如果用户登录，展示头像与消息框 -->
-            {% if current_user.is_authenticated %}
-                <img src="{{ current_user.avatar(64) }}">
-                <textarea rows="2" id="message-textarea" placeholder="Write your message here... Enter to send"></textarea>
-            <!-- 否则，显示登录、注册链接 -->
-            {% else %}
-                <div>Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
-                    <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
+
+    <div class="chatroom wrapper">
+        chat页面
+            <!-- 显示消息 -->
+            <div class="hid_messages">
+                <div class="messages">
+                    {% include 'chat._messages.html' %}
                 </div>
-            {% endif %}
-        </div>                         
+            </div>
+            
+            <!-- 发送消息 -->
+            <div class="acv_messages">
+                <!-- 如果用户登录，展示头像与消息框 -->
+                {% if current_user.is_authenticated %}
+                    <img src="{{ current_user.avatar(64) }}">
+                    <textarea rows="2" id="message-textarea" placeholder="Write your message here... Enter to send"></textarea>
+                <!-- 否则，显示登录、注册链接 -->
+                {% else %}
+                    <div>Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                        <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
+                    </div>
+                {% endif %}
+            </div>                         
+        
+        
+        <div class="hid_chatUser">
+            <div class="chat_user">
+                <h2>聊天室</h2>
+                <!-- 在线人数 -->
+                <h4>
+                    <span id="user-count">0</span> / {{ user_amount }}
+                </h4>
+            
+                <div class="users">
+                    {% include 'chat._users.html' %}
+                </div>
+            </div>
+        </div> 
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
+    {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
     <script type="text/javascript">
         var socket = io('/');
     </script>
