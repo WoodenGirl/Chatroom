@@ -1,17 +1,6 @@
 /* 清除默认样式的代码 */
 /* 去除常见标签默认的 margin 和 padding */
-body,
-h2,
-h4,
-h5,
-h6,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-input {
+body,h2,h4,h5,h6,ul,ol,li,dl,dt,dd,input {
   margin: 0;
   padding: 0;
 }
@@ -29,14 +18,12 @@ body {
 }
 
 /* 去除列表默认样式 */
-ul,
-ol {
+ul,ol {
   list-style: none;
 }
 
 /* 去除默认的倾斜效果 */
-em,
-i {
+em,i {
   font-style: normal;
 }
 
@@ -69,8 +56,7 @@ input {
 }
 
 /* 双伪元素清除法 */
-.clearfix::before,
-.clearfix::after {
+.clearfix::before,.clearfix::after {
   content: "";
   display: table;
 }

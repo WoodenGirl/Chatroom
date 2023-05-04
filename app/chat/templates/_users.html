@@ -1,4 +1,8 @@
-{% for user in users %}
-    {% include "chat._user.html" %}
-    <!-- <div class="user_status" data-id="{{ user.id }}"></div> -->
+{% for user in users %} 
+    {% if user.online == True %}
+        {% include "chat._user.html" %}
+        <div>绿点</div>
+    {% else %}
+        {% include "chat._user.html" %}
+    {% endif %}
 {% endfor %} 

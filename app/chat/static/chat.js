@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
     var ENTER_KEY = 13;
+    var message_count = 0;
+
     // 客户端发送新信息
     function new_message(e) {
         var $textarea = $('#message-textarea');
@@ -13,9 +15,13 @@ $(document).ready(function () {
     }
     $('#message-textarea').on('keydown', new_message.bind(this));
     
+    
     // 客户端监听消息
     socket.on('new message', function (data) {
-        if (data.user_id !== current_user_id) {
+        if (!document.hasFocus()){   // 标签页消息提醒
+            document.title = '(' + message_count + ') ' + 'ChatRoom';
+        }
+        if (data.user_id !== current_user_id) {  // 新消息通知
             messageNotify(data);
         }
         $('.messages').append(data.message_html);   // 插入新消息到页面
@@ -23,24 +29,17 @@ $(document).ready(function () {
         scrollToBottom();     // 进皮条滚动到底部
     });
 
-    // 统计上线人数
+
+    // 统计在线人数
     socket.on('user count', function (data) {
         $('#user-count').html(data.count);
-    })
-
-    // 上线
-    socket.on('online', function (data) {
-        $user_status = $('.user_status')
-        // if ($user_status.data('id') === data.online_id) {
-        //      $user_status.append('<div>绿点</div>')
-        // }        
-        
-    });
-
-    // 下线
-    socket.on('offline', function (data) {
-        if ($user_status.data('id') === data.online_id) {
-        } 
+        $.ajax({
+            url: data.url,
+            type: 'GET',
+            error: function() {
+                alert('online error!')
+            }
+        })
     });
 
 
@@ -75,8 +74,9 @@ $(document).ready(function () {
         var position = $messages.scrollTop();
         if (position === 0) {
             page ++;
+            alert(page)
             $.ajax({
-                url: message_url,
+                url: messages_url,
                 type: 'GET',
                 data: {page: page},
                 success: function (data) {
@@ -85,10 +85,15 @@ $(document).ready(function () {
                     var after_height = $messages[0].scrollHeight;
                     flask_moment_render_all();
                     $messages.scrollTop(after_height - before_height);
+                },
+                error: function () {
+                    alert('No more messages.');
                 }
             })
         }
     }
+    $('.messages').scroll(load_messages);
+
 
 
     // 新消息通知
@@ -97,7 +102,7 @@ $(document).ready(function () {
             Notification.requestPermission();
         else {
             var notification = new Notification("Message from " + data.nickname, {
-                icon: data.gravatar,
+                icon: data.avatar(16),
                 body: data.message_body.replace(/(<([^>]+)>)/ig, "")
             });
 
@@ -109,10 +114,21 @@ $(document).ready(function () {
             }, 4000);
         }
     }
+
+    // 初始化
+    function init() {
+        $(window).focus(function () {  // 页面被激活
+            message_count = 0;
+            document.title = 'Chatroom';
+        });
+        scrollToBottom();
+    }
+
     // 进皮条滚动到底部
     function scrollToBottom() {
         var $messages = $('.messages');
         $messages.scrollTop($messages[0].scrollHeight);
     }
 
+    init()
 });

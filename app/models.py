@@ -10,6 +10,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(254), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     nickname = db.Column(db.String(30))
+    online = db.Column(db.Boolean, default=False, nullable=False)
     messages = db.relationship('Message', back_populates='author', cascade='all')
 
     def __repr__(self):

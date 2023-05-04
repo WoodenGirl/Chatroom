@@ -2,70 +2,73 @@
 {% block title %}Chatroom{% endblock %}
 
 {% block content %}
+    <!-- 网站导航栏 -->
     <div class="header">
+
         <!-- logo 网站名 -->
-        <div class="logo wrapper">
+        <div class="logo">
             <a href="{{ url_for('chat.index') }}">
-                聊天室
-                <img src="{{url_for('static', filename='logo.ong')}}" alt="">
+                <img src="{{url_for('static', filename='logo.png')}}" alt="">
+                <h1>Chatroom</h1>
             </a>
-            <!-- <h1>聊天室</h1> -->
         </div>
 
         <!-- 用户名/sign in -->
         <div class="user">
+            <!-- 如果登录，显示用户头像，用户名，登出按钮 -->
             {% if current_user.is_authenticated %}
                 <div class="username">
                     <img src="{{ current_user.avatar(40) }}" alt="">
                     <p>{{ current_user.nickname }}</p>
                 </div>
                 <a href="{{ url_for('auth.logout') }}">Log out</a>
+            <!-- 如果未登录，显示登录按钮 -->
             {% else %}
-                
-                    <a href="{{ url_for('auth.login') }}">Sign Up</a>
-                
+                <a href="{{ url_for('auth.login') }}">Sign Up</a>
             {% endif %}
         </div>
+
     </div>
 
+    <!-- 聊天室 -->
+    <div class="chatroom">
 
-    <div class="chatroom wrapper">
-        chat页面
-            <!-- 显示消息 -->
-            <div class="hid_messages">
-                <div class="messages">
-                    {% include 'chat._messages.html' %}
-                </div>
-            </div>
-            
-            <!-- 发送消息 -->
-            <div class="acv_messages">
-                <!-- 如果用户登录，展示头像与消息框 -->
-                {% if current_user.is_authenticated %}
-                    <img src="{{ current_user.avatar(64) }}">
-                    <textarea rows="2" id="message-textarea" placeholder="Write your message here... Enter to send"></textarea>
-                <!-- 否则，显示登录、注册链接 -->
-                {% else %}
-                    <div>Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
-                        <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
-                    </div>
-                {% endif %}
-            </div>                         
+        <!-- 显示消息 -->
+         <div class="messages">
+            {% include 'chat._messages.html' %}
+        </div>
         
         
+        <!-- 发送消息 -->
+        <div class="acv_messages">
+            <!-- 如果用户登录，展示头像与消息框 -->
+            {% if current_user.is_authenticated %}
+                <img src="{{ current_user.avatar(90) }}">
+                <textarea rows="2" id="message-textarea" placeholder="Write your message here... Enter to send"></textarea>
+            <!-- 否则，显示登录、注册链接 -->
+            {% else %}
+                <textarea rows="2" class="message-textarea2" placeholder="Please Sign in or Sign up to send message."></textarea>
+                <!-- <div>Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                    <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
+                </div> -->
+            {% endif %}
+        </div>                         
+    
+        <!-- 用户列表 -->
         <div class="hid_chatUser">
             <div class="chat_user">
-                <h2>聊天室</h2>
-                <!-- 在线人数 -->
-                <h4>
-                    <span id="user-count">0</span> / {{ user_amount }}
-                </h4>
-            
+                <h2>User-list
+                    <!-- 在线人数 -->
+                    <span id="user-count">0</span> 
+                    <span>/ {{ user_amount }}</span>
+                </h2>
+                <!-- 所有注册用户，有上线标志 -->
                 <div class="users">
                     {% include 'chat._users.html' %}
                 </div>
             </div>
         </div> 
+
     </div>
 {% endblock %}
 
@@ -74,5 +77,8 @@
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
     <script type="text/javascript">
         var socket = io('/');
+        var root_url = "{{ url_for('chat.index') }}";
+        var messages_url = "{{ url_for('chat.get_messages') }}";
+        var current_user_id = {{ current_user.id|default(0) }}; 
     </script>
 {% endblock %}

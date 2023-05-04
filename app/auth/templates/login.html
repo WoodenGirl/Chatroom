@@ -11,14 +11,17 @@
                 </div>
                 <div class="right">
                     <div class="right-con">
-                        <h1>Here Sign Up</h1>
+                        <h1>Here Sign In</h1>
                         
                         <h3>Email</h3>
                         <input class="text" name="email" placeholder="greyli.py@gmail.com" type="text">
                         
                         <h3>PassWord</h3>
                         <input class="text" name="password" placeholder="Password" type="password">
-              
+                        
+                        <input id="remember" type="checkbox" name="remember" checked="">
+                            <label for="remember">Remember me</label>
+
                         <input class="btn" type="submit" value="Submit">
                         <p>New user?<a href="{{url_for('auth.register')}}">Click here to Sign Up!</a></p>
                     </div>

@@ -1,6 +1,6 @@
 # 2023/4/29
 ## error：
-- 使用蓝图访问不到模板和静态资源  
+- 使用蓝图访问不到模板和静态资源  （详情见2023/5/3）
     解决：
     1. 共用原始资源文件夹
         模板：在定义蓝图时声明位置：`template_folder="../templates"`
@@ -67,7 +67,7 @@
             uri.replace('ws:', 'http:')`
 
 ## success：
-+ 完成用户人员展示，上线昵称后面+绿点 下线去掉绿点
++ 完成用户人员展示，但没完成上线昵称后面+绿点 下线去掉绿点
 + 上传到github
 + 在pythonanywhere部署
     ````
@@ -102,7 +102,7 @@
   解决：声明根部静态资源位置`app = Flask('Chatroom', static_folder='asserts')`
 
 ## succes
-+ 试图改善pythonanywhere上的socket速度，
++ 试图改善pythonanywhere上的socket速度
     1. 查找数据库的慢查询语句
     2. 为页面设置缓存
     3. 静态资源打包
@@ -110,24 +110,55 @@
     修改config.py和chat.py文件，开启缓存
     数据库初始化
 
+---
+
 # 2023/5/3
 
+## succes
 + 增加了日志模块
-+ 设置了不同的环境配置，部署只需修改.env中的FLASK_ENV,FLASK_CONFIG的两个变量值即可
+
++ 设置了不同的环境配置，部署只需修改.env中的FLASK_ENV,FLASK_CONFIG的两个变量值即可（通过python-dotenv）
+
 + 增加了根目录下的模板与静态资源文件夹，解决了蓝图模板继承根目录模板的问题
     参照http://fewstreet.com/2015/01/16/flask-blueprint-templates.html
+
 + 不完美地解决了在蓝图和根目录静态资源文件夹一致的情况下，蓝图静态资源访问不到的问题
-搜索到的答案：
-    1. 仅使用应用程序静态文件夹。
-    2.注册蓝图时设置url_prefix。
-    3.为蓝图使用另一个静态文件夹前缀。
-    4.禁用应用程序静态文件夹app = Flask(__name__, static_folder=None)。
-    5.使用带有静态端点描述符(https://stackoverflow.com/a/19179524/880326)的hack。
-实际上：
-    1是不可能的，太不方便了；
-    2.我的index页面也在蓝图里呀，不方便；
-    3.flask_assert里默认蓝图的静态资源是static的，不好改；
-    4.前几天是这么解决的，但是不够美观；
-    5.如果能解决就是最好的答案，但可惜试了一下没起作用。
-    
+-搜索到的答案：
+    (1) 仅使用应用程序静态文件夹。
+    (2) 注册蓝图时设置url_prefix。
+    (3) 为蓝图使用另一个静态文件夹前缀。
+    (4) 禁用应用程序静态文件夹app = Flask(__name__, static_folder=None)。
+    (5)  使用带有静态端点描述符(https://stackoverflow.com/a/19179524/880326)的hack。
+-实际上：
+    (1) 是不可能的，太不方便了；
+    (2) 我的index页面也在蓝图里呀，不方便；
+    (3) flask_assert里默认蓝图的静态资源是static的，不好改；
+    (4) 前几天是这么解决的，但是不够美观；
+    (5) 如果能解决就是最好的答案，但可惜试了一下没起作用。
+    最终选择（2），在__init__.py中在单独注册一个函数让('/')重定向到index页面
+
++ 解决了每次都要设置set FLASK_APP和FLASK_DEBUG的问题，在config文件中设置没用，但在.flaskenv中设置可以
+
+---
+
+# 2023/5/4
+
+## error
+- 使用paginate(xxx, per_page=xxx))报错：
+    `Query.paginate() takes 1 positional argument but 2 positional arguments`\
+  解决：
+    pagination = xxx.paginate(page=xxx, per_page=xxx)
+
+- 数据库不接受负索引报错：
+    negative indexes are not accepted by SQL index / slice operators
+  原代码：`messages = Message.query.order_by(Message.timestamp.asc())[-amount::]`
+  现在：
+    ````
+    messages = Message.query.order_by(Message.timestamp.asc())[:] 
+    messages = messages[-amount::]
+    ````
+
+## success
++ 完成一次显示30条消息，每次滚轮到顶部时再加载30条的效果
++ 最后的最后，还是用的增加一个数据库变量来实现上线昵称后面+绿点 下线去掉绿点，虽然这种方法最简单，但总觉得这种方法性能应该不太好，但在视图文件和js文件中修修改改好几天，都没成功，放弃。。。
 

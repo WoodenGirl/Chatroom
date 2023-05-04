@@ -10,10 +10,7 @@ from app.models import User, Message
 from app.config import config
 
 class MyApp(Flask):
-    def __init__(
-        self, 
-        import_name: str,
-    ):
+    def __init__(self):
         Flask.__init__(self, __name__)
         self.jinja_loader = jinja2.ChoiceLoader([
             self.jinja_loader,
@@ -31,7 +28,7 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
     
-    app = MyApp('Chatroom')
+    app = MyApp()
     app.config.from_object(config[config_name])
     
     register_extensions(app)
@@ -106,7 +103,7 @@ def register_commands(app):
         db.session.commit()
 
         click.echo('Generating users...')
-        for i in range(10):
+        for i in range(20):
             user = User(nickname=fake.name(), email=fake.email())
             user.set_password(fake.password())
             db.session.add(user)
@@ -116,7 +113,7 @@ def register_commands(app):
                 db.session.rollback()
 
         click.echo('Generating messages...')
-        for i in range(10):
+        for i in range(100):
             message = Message(
                 author=User.query.get(random.randint(1, User.query.count())),
                 body=fake.sentence(),
@@ -138,15 +135,16 @@ def register_request_handlers(app):
         return response
 
 def register_asserts():
-    css = Bundle('css/style.css',
-                 'auth/css/auth.css',
-                 'chat/css/chat.css',
+    css = Bundle('css/base.css',
+                 'css/style.css',
+                 'auth/auth.css',
+                 'chat/chat.css',
                  filters='cssmin', output='gen/packed.css')
     
     js = Bundle('js/jquery.js',
                 'js/socket.io.js',
-                'auth/js/auth.js',
-                'chat/js/chat.js',
+                'auth/auth.js',
+                'chat/chat.js',
                  filters='jsmin', output='gen/packed.js')
     asserts.register('js_all', js)
     asserts.register('css_all', css)
