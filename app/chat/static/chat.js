@@ -33,13 +33,6 @@ $(document).ready(function () {
     // 统计在线人数
     socket.on('user count', function (data) {
         $('#user-count').html(data.count);
-        $.ajax({
-            url: data.url,
-            type: 'GET',
-            error: function() {
-                alert('online error!')
-            }
-        })
     });
 
 

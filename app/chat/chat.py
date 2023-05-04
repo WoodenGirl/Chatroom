@@ -16,7 +16,9 @@ def connect():
     global online_ids
     if current_user.is_authenticated and current_user.id not in online_ids:
         online_ids.append(current_user.id)
-        emit('user count', {'count': len(online_ids), 'url': url_for('chat.get_online', online_id=current_user.id)}, broadcast=True)
+        current_user.online = True
+        db.session.commit()
+    emit('user count', {'count': len(online_ids)}, broadcast=True)
 
 
 @socketio.on('disconnect')
@@ -24,7 +26,9 @@ def disconnect():
     global online_ids
     if current_user.is_authenticated and current_user.id in online_ids:
         online_ids.remove(current_user.id)
-        emit('user count', {'count': len(online_ids), 'url': url_for('chat.get_online', online_id=current_user.id)}, broadcast=True)
+        current_user.online = False
+        db.session.commit()
+    emit('user count', {'count': len(online_ids)}, broadcast=True)
 
 @socketio.on('new message')
 def new_message(message_body): 
@@ -62,18 +66,6 @@ def delete_message(message_id):
     db.session.delete(message)
     db.session.commit()
     return '', 204
-
-# 上线下线
-
-@chat_blue.route('/user/switch/<online_id>')
-def get_online(online_id):
-    user = User.query.filter_by(id=online_id).first()
-    if user.online == True:
-        user.online = False
-    else:
-        user.online = True
-    db.session.commit()
-    return '', 205
 
 # 无限滑动
 
