@@ -12,6 +12,8 @@ class User(UserMixin, db.Model):
     nickname = db.Column(db.String(30))
     online = db.Column(db.Boolean, default=False, nullable=False)
     messages = db.relationship('Message', back_populates='author', cascade='all')
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    room = db.relationship('Room', back_populates='users')
 
     def __repr__(self):
         return '<User {}>'.format(self.nickname)
@@ -37,3 +39,8 @@ class Message(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', back_populates='messages')
+
+class Room(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(254), unique=True, nullable=False)
+    users = db.relationship('User', back_populates='room', cascade='all')

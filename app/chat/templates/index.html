@@ -2,6 +2,7 @@
 {% block title %}Chatroom{% endblock %}
 
 {% block content %}
+
     <!-- 网站导航栏 -->
     <div class="header">
 
@@ -34,10 +35,10 @@
     <div class="chatroom">
 
         <!-- 显示消息 -->
-         <div class="messages">
+        <div class="messages">
+            <div class="ui text loader">Loading messages...</div>
             {% include 'chat._messages.html' %}
         </div>
-        
         
         <!-- 发送消息 -->
         <div class="acv_messages">

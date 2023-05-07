@@ -1,7 +1,7 @@
 import numpy as np
 from flask import Blueprint, render_template, abort, request, current_app, redirect, url_for
 from flask_login import current_user
-from flask_socketio import emit
+from flask_socketio import emit, join_room, leave_room
 from app.models import Message, User
 from app.extensions import socketio, db
 
@@ -9,7 +9,7 @@ chat_blue = Blueprint('chat', __name__, url_prefix="/chat", template_folder="tem
 
 online_ids = []
 
-# 服务器接听消息
+# 服务器接听消息(全局)
 
 @socketio.on('connect')
 def connect():
@@ -19,7 +19,6 @@ def connect():
         current_user.online = True
         db.session.commit()
     emit('user count', {'count': len(online_ids)}, broadcast=True)
-
 
 @socketio.on('disconnect')
 def disconnect():
@@ -44,6 +43,28 @@ def new_message(message_body):
           'user_id': current_user.id
           }, broadcast=True)
 
+
+# 服务器接听消息(房间)
+
+@socketio.on('join', namespace='/another')
+def on_join(data):
+    nickname = data['nickname']
+    room = data['room']
+    join_room(room)
+    emit('status', nickname + ' has entered the room.', room=room)
+
+@socketio.on('leave', namespace='/another')
+def on_leave(data):
+    nickname = data['nickname']
+    room = data['room']
+    leave_room(room)
+    emit('status', nickname + ' has left the room.', room=room)
+
+@socketio.on('room message', namespace='/another')
+def new_room_message(message_body): 
+    emit('message', {'message': current_user.nickname + ':' + message_body}, room=current_user.id)
+
+
 # Controller
 
 # 渲染index
@@ -55,6 +76,13 @@ def index():
     user_amount = User.query.count() 
     messages = Message.query.order_by(Message.timestamp.asc())[:]
     return render_template('chat.index.html', messages=messages[-amount:], users=users, user_amount=user_amount)
+
+# 私聊
+
+@chat_blue.route('/another')
+def personal():
+    return render_template('chat.another.html')
+
 
 # 删除消息
 

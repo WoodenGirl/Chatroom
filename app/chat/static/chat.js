@@ -14,8 +14,8 @@ $(document).ready(function () {
         }
     }
     $('#message-textarea').on('keydown', new_message.bind(this));
-    
-    
+
+
     // 客户端监听消息
     socket.on('new message', function (data) {
         if (!document.hasFocus()){   // 标签页消息提醒
@@ -29,12 +29,10 @@ $(document).ready(function () {
         scrollToBottom();     // 进皮条滚动到底部
     });
 
-
     // 统计在线人数
     socket.on('user count', function (data) {
         $('#user-count').html(data.count);
     });
-
 
     // 引用消息
     $('.messages').on('click', '.quoteMessage', function () {
@@ -60,6 +58,9 @@ $(document).ready(function () {
             });
     });
 
+
+
+
     // 滚动加载消息（一次30条）
     var page = 1
     function load_messages() {
@@ -67,7 +68,7 @@ $(document).ready(function () {
         var position = $messages.scrollTop();
         if (position === 0) {
             page ++;
-            alert(page)
+            $('.ui.loader').toggleClass('active');
             $.ajax({
                 url: messages_url,
                 type: 'GET',
@@ -78,15 +79,16 @@ $(document).ready(function () {
                     var after_height = $messages[0].scrollHeight;
                     flask_moment_render_all();
                     $messages.scrollTop(after_height - before_height);
+                    $('.ui.loader').toggleClass('active');
                 },
                 error: function () {
                     alert('No more messages.');
+                    $('.ui.loader').toggleClass('active');
                 }
             })
         }
     }
     $('.messages').scroll(load_messages);
-
 
 
     // 新消息通知

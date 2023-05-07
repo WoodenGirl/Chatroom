@@ -1,0 +1,17 @@
+{% extends 'chat.index.html' %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        var socket = io('/another');
+
+        socket.on('connect', function () {
+            var nickname = $('.nickname').html()
+            socket.emit('join', {room: current_user_id, nickname: nickname});
+        });
+        socket.on('disconnect', function () {
+            var nickname = $('.nickname').html()
+            socket.emit('leave', {room: current_user_id, nickname: nickname});
+        });
+    </script>
+{% endblock %}
