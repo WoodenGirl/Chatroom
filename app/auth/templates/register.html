@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
+
 {% block page_title %}Sign Up{% endblock %}
 
-{% block content %}
-            
+{% block content %}     
     <form method="post" action="{{ url_for('auth.register') }}">
         <div class="wrap">
             <div class="form">
@@ -11,21 +11,37 @@
                     <video src="{{url_for('auth.static' , filename = 'video.mp4')}}" muted autoplay loop></video>
                 </div>
                 <div class="right">
-                    <div class="right-con">
+                    <div class="register_right-con">
                         <h1>Here Register</h1>
-                        <h3>NickName</h3>
-                        <input class="text" name="nickname" placeholder="Nickname" type="text">
-                        <h3>Email</h3>
-                        <input class="text" name="email" placeholder="greyli.py@gmail.com" type="text">
+                        <div class="form-item">
+                            <h3>NickName</h3>
+                            <input class="text" name="register_nickname" placeholder="Nickname" type="text">
+                            <span class="msg"></span>
+                        </div>
                         
-                        <h3>PassWord</h3>
-                        <input class="text" name="password" placeholder="Password" type="password">
-
-                        <h3>Confirm PassWord</h3>
-                        <input class="text" name="password2" placeholder="Password" type="password">
+                        <div class="form-item">
+                            <h3>Email</h3>
+                            <input class="text" name="register_email" placeholder="greyli.py@gmail.com" type="text">
+                            <span class="msg"></span>
+                        </div>
                         
-                        <input tabindex="0" class="hidden" type="checkbox" checked="">
-                        <label>I agree to the Terms and Conditions</label>
+                        <div class="form-item">
+                            <h3>PassWord</h3>
+                            <input class="text" name="register_password" placeholder="Password" type="password">
+                            <span class="msg"></span>
+                        </div>
+                        
+                        <div class="form-item">
+                            <h3>Confirm PassWord</h3>
+                            <input class="text" name="password2" placeholder="Password" type="password">
+                            <span class="msg"></span>
+                        </div>
+                          
+                        <div class="form-item">
+                            <!-- <span class="msg"></span> -->
+                            <input tabindex="0" name="queren" type="checkbox">
+                            <label style="color: gray;">I agree to the Terms and Conditions</label>
+                        </div>
                         
                         <input class="btn" type="submit" value="Register">
                     </div>
@@ -33,13 +49,4 @@
             </div>
         </div> 
     </form>
-
-    <!-- {% if error %}
-        <div>{{ error }}</div>
-    {% endif %} -->
-
-    <div >
-        Already signed up? <a href="{{ url_for('auth.login') }}">Login here</a> instead.
-    </div>
-        
 {% endblock %}

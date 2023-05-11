@@ -1,15 +1,19 @@
 <div class="user">
-    <!-- 头像-->
-    <img src="{{ user.avatar(30) }}">
-    <!-- 昵称 -->
-    <!-- <a href="{{ url_for('chat.personal', room_id=current_user.id) }}"> -->
-    <span class="nickname" data-id="{{ user.id }}">{{ user.nickname }}</span>
-    <!-- </a> -->
-    <!-- 管理图标 -->
-    {% if user.is_admin %}
-        <div>管理员</div>
-    {% endif %}
-    {% if user.online %}
-        <div>绿点</div>
-    {% endif %}
+    <!-- <div class="info"> -->
+        <!-- 头像-->
+        <img src="{{ user.avatar(30) }}">
+        <!-- 昵称 -->
+        <span class="nickname">{{ user.nickname }}</span>
+
+        <div class="user_manager">
+            <!-- 管理图标 -->
+            {% if user.is_admin %}
+            <span class="manager">管理员</span>
+            {% endif %}
+            {% if user.online %}
+            <span class="green_dot"></span>
+            {% endif %}
+        </div>
+        
+    <!-- </div> -->
 </div>

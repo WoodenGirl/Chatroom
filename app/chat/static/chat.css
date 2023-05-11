@@ -193,7 +193,6 @@ body{
     overflow-y: scroll;
     /* 取消水平滚动 */
     overflow-x:hidden;
-
     /* background-color: #d16ba5; */
 }
 
@@ -221,54 +220,47 @@ body{
 /* 消息样式 */
 .chatroom  .messages img{
     float: left;
-    /* position: absolute; */
-    
+    margin: 5px;
 }
 .chatroom  .messages .user_info{
-    position: relative;
-    height: 80px;
-    margin-bottom: 10px;
-    /* background-color: yellowgreen; */
+    min-height: 80px;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 5px;
 }
 
 .chatroom  .messages .user_info .nickname{
-    /* margin-top: 20px; */
-    float: left;
-    /* background-color: red; */
-    padding: 0 15px;
-    font-size: 16px;
+    margin-left: 85px;
+    padding: 3px 0;
+    font-size: 20px;
+    color: rgb(165,141,213);
 }
 
 .chatroom  .messages .message-body{
-    position: absolute;
-    left: 80px;
-    top: 30px;
+    position: unset;
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    max-width: 68%;
+    word-break: break-all;
     background-image: linear-gradient(to left top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #84a4e9, #6daeec, #58b6eb, #32bfe5, #18c6d9, #2fcbc7, #54cfb2);
     padding: 5px 20px;
     font-size: 20px;
     border-radius: 10px;
 }
 .chatroom  .messages .user_info .timestamp{
-    position: absolute;
     font-size: 10px;
     padding: 0 5px;
     color: gray;
-    top: 6px;
-
-    /* background-color: #2fcbc7; */
 }
 
 
 /* 引用和删除 */
-.chatroom  .messages .quoteMessage{
-    position: absolute;
-    right: 50%;
-    color: rgb(42, 193, 225);
-} 
+.chatroom  .messages .quoteMessage,
 .chatroom  .messages .deleteMessage{
-    position: absolute;
-    right: 45%;
-    color: #d16ba5;
+    font-size: 10px;
+    color: rgb(42, 193, 225);
+    cursor: pointer;
 } 
 
 
@@ -281,47 +273,62 @@ body{
     height: 20%;
     float: left;
     width: 76%;
-    background-color: rgba(0, 0, 0, 0.1);
+    /* background-color: rgba(0, 0, 0, 0.1); */
     /* background-color: #84a4e9; */
 }
 .chatroom .acv_messages img{
     float: left;
     padding: 5px;
-    width: 15%;
-    height: 100%;
+    /* width: 15%; */
+    height: 50%;
     /* background-color: #d16ba5; */
 }
 .chatroom .acv_messages #message-textarea{
     position: absolute;
     
     float: left;
-    width: 85%;
-    height: 100%;
+    width: 92.5%;
+    height: 50%;
     padding: 0 20px;
-    border-radius: 5px;
-    /* 去掉边框显示 */
-    border: none;
+    border-radius: 4px;
+    border-color: #e4e4e4;
+    background: #f5f5f5;
+    transition: all 0.5s;
     /* 去掉点击时的边框显示 */
     outline:medium;
     /* 固定大小 */
     resize: none;
 }
 
+.chatroom .acv_messages #message-textarea:focus {
+    border-color: #e4e4e4;
+    background: #fff;
+    height: 70%;
+}
+
 .chatroom .acv_messages .message-textarea2{
     position: absolute;
     
     float: left;
-    width: 100%;
-    height: 100%;
+    width: 99%;
+    height: 50%;
+    margin-left: 1%;
     padding: 0 20px;
-    border-radius: 5px;
-    /* 去掉边框显示 */
-    border: none;
+    border-radius: 4px;
+    border-color: #e4e4e4;
+    background: #f5f5f5;
+    transition: all 0.5s;
     /* 去掉点击时的边框显示 */
     outline:medium;
     /* 固定大小 */
     resize: none;
 }
+
+.chatroom .acv_messages .message-textarea2:focus {
+    border-color: #e4e4e4;
+    background: #fff;
+    height: 70%;
+  }
 
 /* 聊天室用户 */
 .chatroom .hid_chatUser{
@@ -364,10 +371,42 @@ body{
     /* background-color: #54cfb2; */
 }
 
+
+
 .chatroom .chat_user .user{
-    /* background-color: red; */
+    width: 100%;
+    height: 30px;
     margin-bottom: 10px;
+    /* background-color: red; */
 }
+
+.chatroom .chat_user .user .nickname{
+    line-height: 30px;
+}
+
+.chatroom .chat_user .user .user_manager{
+    float: right;
+    height: 30px;
+    width: auto;
+    margin-right: 5%;
+    /* background-color: red; */
+}
+
+.chatroom .chat_user .user .manager{
+    line-height: 30px;
+}
+
+.chatroom .chat_user .user .green_dot{
+    float: right;
+    margin-left: 20px;
+    margin-top: 8px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-shadow: 2px 2px  4px 1px rgb(0, 0, 0,0.2);
+    background-color: rgb(55, 177, 55);
+} 
+
 
 
 

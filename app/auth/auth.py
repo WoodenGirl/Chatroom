@@ -25,13 +25,13 @@ def login():
         if user is not None:
             if user.password_hash is None:
                 flash('Please use the third party service to log in.')
-                return redirect(url_for('.login'))
+                return redirect(url_for('auth.login'))
 
             if user.verify_password(password):
                 login_user(user, remember_me)
                 return redirect(url_for('chat.index'))
         flash('Either the email or password was incorrect.')
-        return redirect(url_for('.login'))
+        return redirect(url_for('auth.login'))
 
     return render_template('auth.login.html')
 
@@ -49,15 +49,15 @@ def register():
         return redirect(url_for('chat.index'))
 
     if request.method == 'POST':
-        email = request.form['email'].lower()
+        email = request.form['register_email'].lower()
 
         user = User.query.filter_by(email=email).first()
         if user is not None:
             flash('The email is already registered, please log in.')
-            return redirect(url_for('.login'))
+            return redirect(url_for('auth.login'))
 
-        nickname = request.form['nickname']
-        password = request.form['password']
+        nickname = request.form['register_nickname']
+        password = request.form['register_password']
 
         user = User(nickname=nickname, email=email)
         user.set_password(password)

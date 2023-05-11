@@ -4,7 +4,7 @@
         <!-- 头像-->
         <img src="{{ message.author.avatar(65) }}">
         <!-- 昵称 -->
-        <span class="nickname">{{ message.author.nickname }}</span>     
+        <div class="nickname">{{ message.author.nickname }}</div>     
         <!-- 消息 -->
         <span class="message-body">{{ message.body }}</span>
         <!-- 时间戳 -->
@@ -21,8 +21,6 @@
                 删除
             </span>
         {% endif %}
-{% endif %}
-    </div>
-    
-    
+        {% endif %}
+    </div> 
 </div>
