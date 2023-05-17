@@ -10,19 +10,20 @@
                     <video src="{{url_for('auth.static' , filename = 'video.mp4')}}" muted autoplay loop></video>
                 </div>
                 <div class="right">
-                    <div class="right-con">
+                    <div class="login_right-con">
                         <h1>Here Sign In</h1>
                         
                         <h3>Email</h3>
-                        <input class="text" name="email" placeholder="greyli.py@gmail.com" type="text">
+                        <input class="text" name="log_email" placeholder="greyli.py@gmail.com" type="text">
                         
                         <h3>PassWord</h3>
-                        <input class="text" name="password" placeholder="Password" type="password">
-                        
-                        <input id="remember" type="checkbox" name="remember" checked="">
-                            <label for="remember">Remember me</label>
+                        <input class="text" name="log_password" placeholder="Password" type="password">
 
+                        <input tabindex="0" name="hidden" type="checkbox" title="Remember">
+                        <label style="color: gray;">Remember Me?</label>
+              
                         <input class="btn" type="submit" value="Submit">
+                        
                         <p>New user?<a href="{{url_for('auth.register')}}">Click here to Sign Up!</a></p>
                     </div>
                 </div>

@@ -1,26 +1,23 @@
-<div >
-    <!-- 用户信息 -->
-    <div class="user_info">
-        <!-- 头像-->
-        <img src="{{ message.author.avatar(65) }}">
-        <!-- 昵称 -->
-        <div class="nickname">{{ message.author.nickname }}</div>     
-        <!-- 消息 -->
-        <span class="message-body">{{ message.body }}</span>
-        <!-- 时间戳 -->
+<div class="user_info">
+    <!-- 头像-->
+    <img src="{{ message.author.avatar(65) }}">
+    <!-- 昵称、时间戳 -->
+    <div class="nick-time">
+        <span class="nickname">{{ message.author.nickname }}</span>
         <span class="timestamp">{{ moment(message.timestamp).format('lll') }}</span>
-
-        <!-- 管理消息 -->
-        {% if current_user.is_authenticated %}
-        <!-- 引用 -->
-        <span class="quoteMessage">引用</span>
-        <!-- 删除 -->
-        {% if current_user == message.author or current_user.is_admin %}
-            <span class="deleteMessage"
-                data-href="{{ url_for('chat.delete_message', message_id=message.id) }}">
-                删除
-            </span>
-        {% endif %}
-        {% endif %}
-    </div> 
+    </div>
+    
+    <!-- 消息 -->
+    <span class="message-body">{{ message.body }}</span>
+    <!-- 管理消息 -->
+    {% if current_user.is_authenticated %}
+    <!-- 引用 -->
+    <span class="quoteMessage">Quote</span>
+    <!-- 删除 -->
+    {% if current_user == message.author or current_user.is_admin %}
+    <span class="deleteMessage" data-href="{{ url_for('chat.delete_message', message_id=message.id) }}">
+        Delete
+    </span>
+    {% endif %}
+    {% endif %}
 </div>

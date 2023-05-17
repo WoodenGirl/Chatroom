@@ -1,20 +1,20 @@
 /* 版心 */
 
-body{
-    overflow-y:hidden;
+body {
+    overflow-y: hidden;
     background-color: rgb(245, 245, 245);
 }
 
 /* 导航栏header */
-.header{
+.header {
     height: 80px;
     border-radius: 2px;
     background-image: linear-gradient(to left top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #84a4e9, #6daeec, #58b6eb, #32bfe5, #18c6d9, #2fcbc7, #54cfb2);
-    box-shadow: 0 1px 7px 5px rgb(0, 0, 0,0.2);
+    box-shadow: 0 1px 7px 5px rgb(0, 0, 0, 0.2);
 }
 
 /* header的logo */
-.header .logo{
+.header .logo {
     float: left;
     padding: 0 35px;
     width: 30%;
@@ -22,7 +22,7 @@ body{
     /* background-color: red; */
 }
 
-.header .logo a{
+.header .logo a {
     display: flex;
     width: 74px;
     height: 74px;
@@ -30,18 +30,18 @@ body{
     /* font-size: 0; */
 }
 
-.header .logo a img{
+.header .logo a img {
     display: inline-block;
     width: 74px;
     height: 74px;
     /* background-color: pink; */
 }
 
-.header .logo a h1{
+.header .logo a h1 {
     display: inline-block;
     line-height: 80px;
     margin-left: 20px;
-    font-family: serif ;
+    font-family: serif;
     color: rgb(165, 141, 213);
     /* background-color: #2fcbc7; */
     /* float: right; */
@@ -54,23 +54,26 @@ body{
     padding: 0 30px;
     /* background-color: black; */
 }
-.header .user .username{
+
+.header .user .username {
     float: left;
     line-height: 100px;
 }
-.header .user .username img{
+
+.header .user .username img {
     width: 40px;
     height: 40px;
     margin-top: 20px;
     margin-right: 20px;
 }
-.header .user .username p{
+
+.header .user .username p {
     float: right;
     /* margin-bottom: -100px; */
     line-height: 80px;
 }
 
-.header .user a{
+.header .user a {
     float: right;
     font-size: 23px;
     line-height: 80px;
@@ -80,7 +83,7 @@ body{
 
 
 /* 聊天室 */
-.chatroom{
+.chatroom {
     position: relative;
     margin: 10px auto;
     height: 100%;
@@ -100,9 +103,9 @@ body{
     text-align: center;
     z-index: 1000;
     -webkit-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
 }
-  
+
 /* Static Shape */
 .ui.loader:before {
     position: absolute;
@@ -114,7 +117,7 @@ body{
     border-radius: 500rem;
     border: 0.2em solid rgba(0, 0, 0, 0.1);
 }
-  
+
 /* Active Shape */
 .ui.loader:after {
     position: absolute;
@@ -124,64 +127,72 @@ body{
     width: 100%;
     height: 100%;
     -webkit-animation: loader 0.6s linear;
-            animation: loader 0.6s linear;
+    animation: loader 0.6s linear;
     -webkit-animation-iteration-count: infinite;
-            animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
     border-radius: 500rem;
     border-color: #767676 transparent transparent;
     border-style: solid;
     border-width: 0.2em;
     -webkit-box-shadow: 0px 0px 0px 1px transparent;
-            box-shadow: 0px 0px 0px 1px transparent;
+    box-shadow: 0px 0px 0px 1px transparent;
 }
-  
+
 /* Active Animation */
 @-webkit-keyframes loader {
     from {
-      -webkit-transform: rotate(0deg);
-              transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
+
     to {
-      -webkit-transform: rotate(360deg);
-              transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
+
 @keyframes loader {
     from {
-      -webkit-transform: rotate(0deg);
-              transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
+
     to {
-      -webkit-transform: rotate(360deg);
-              transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
+
 .ui.loader:before,
 .ui.loader:after {
     width: 2.28571429rem;
     height: 2.28571429rem;
     margin: 0em 0em 0em -1.14285714rem;
 }
+
 .ui.text.loader {
     width: auto !important;
     height: auto !important;
     text-align: center;
     font-style: normal;
 }
+
 .ui.loader.active,
 .ui.loader.visible {
-  display: block;
+    display: block;
 }
+
 .ui.loader.disabled,
 .ui.loader.hidden {
-  display: none;
+    display: none;
 }
+
 .ui.text.loader {
     min-width: 2.28571429rem;
     padding-top: 3.07142857rem;
 }
 
-.chatroom  .messages{
+.chatroom .messages {
     position: absolute;
     left: 0;
     top: 0;
@@ -192,81 +203,90 @@ body{
     /* 开启页面垂直滚动 */
     overflow-y: scroll;
     /* 取消水平滚动 */
-    overflow-x:hidden;
+    overflow-x: hidden;
     /* background-color: #d16ba5; */
 }
 
 /* 修改滚动条样式 */
 /* 滚动条整体样式 */
-.chatroom .messages::-webkit-scrollbar{
+.chatroom .messages::-webkit-scrollbar {
     width: 8px;
     height: 100%;
     scrollbar-arrow-color: #d16ba5;
 }
+
 /* 滚动条里面的小方块 */
-.chatroom .messages::-webkit-scrollbar-thumb{
+.chatroom .messages::-webkit-scrollbar-thumb {
     border-radius: 5px;
     /* -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2); */
-    background-color:rgb(168,144,217) ;
+    background-color: rgb(168, 144, 217);
 }
+
 /* 滚动条的轨道 */
-.chatroom .messages::-webkit-scrollbar-track{
+.chatroom .messages::-webkit-scrollbar-track {
     border-radius: 3px;
-    background-color: rgb(42,193,225);
+    background-color: rgb(42, 193, 225);
 }
 
 
 
 /* 消息样式 */
-.chatroom  .messages img{
-    float: left;
-    margin: 5px;
-}
-.chatroom  .messages .user_info{
+.chatroom .messages .user_info {
     min-height: 80px;
     margin-bottom: 20px;
     background-color: white;
     border-radius: 5px;
 }
 
-.chatroom  .messages .user_info .nickname{
-    margin-left: 85px;
-    padding: 3px 0;
-    font-size: 20px;
-    color: rgb(165,141,213);
+.chatroom .messages img {
+    float: left;
+    margin: 5px;
 }
 
-.chatroom  .messages .message-body{
+.chatroom .messages .nick-time{
+    height: 30px;
+    /* background-color: red; */
+}
+
+.chatroom .messages .user_info .nickname {
+    margin-left: 10px;
+    padding: 3px 0;
+    font-size: 23px;
+    /* background-color: black; */
+    color: rgb(165, 141, 213);
+}
+
+.chatroom .messages .user_info .timestamp {
+    font-size: 10px;
+    padding: 0 5px;
+    color: gray;
+}
+
+.chatroom .messages .message-body {
     position: unset;
     display: inline-block;
     margin-left: 10px;
     margin-bottom: 10px;
-    max-width: 68%;
+    max-width: 67%;
     word-break: break-all;
     background-image: linear-gradient(to left top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #84a4e9, #6daeec, #58b6eb, #32bfe5, #18c6d9, #2fcbc7, #54cfb2);
     padding: 5px 20px;
     font-size: 20px;
     border-radius: 10px;
 }
-.chatroom  .messages .user_info .timestamp{
-    font-size: 10px;
-    padding: 0 5px;
-    color: gray;
-}
-
 
 /* 引用和删除 */
-.chatroom  .messages .quoteMessage,
-.chatroom  .messages .deleteMessage{
+.chatroom .messages .quoteMessage,
+.chatroom .messages .deleteMessage {
     font-size: 10px;
     color: rgb(42, 193, 225);
     cursor: pointer;
-} 
+}
 
 
 
 /* 消息框样式 */
-.chatroom .acv_messages{
+.chatroom .acv_messages {
     position: absolute;
     left: 0;
     top: 72%;
@@ -276,141 +296,129 @@ body{
     /* background-color: rgba(0, 0, 0, 0.1); */
     /* background-color: #84a4e9; */
 }
-.chatroom .acv_messages img{
+
+.chatroom .acv_messages img {
+    position: relative;
     float: left;
     padding: 5px;
-    /* width: 15%; */
-    height: 50%;
-    /* background-color: #d16ba5; */
+    height: 60%;
+    top: 7px;
 }
-.chatroom .acv_messages #message-textarea{
+
+.chatroom .acv_messages #message-textarea {
     position: absolute;
-    
+
     float: left;
-    width: 92.5%;
-    height: 50%;
-    padding: 0 20px;
+    width: 90%;
+    height: 70%;
+    padding: 10px;
     border-radius: 4px;
     border-color: #e4e4e4;
-    background: #f5f5f5;
+    background: #fff;
     transition: all 0.5s;
     /* 去掉点击时的边框显示 */
-    outline:medium;
+    outline: medium;
     /* 固定大小 */
     resize: none;
-}
-
-.chatroom .acv_messages #message-textarea:focus {
-    border-color: #e4e4e4;
-    background: #fff;
-    height: 70%;
-}
-
-.chatroom .acv_messages .message-textarea2{
-    position: absolute;
+    font-size: 20px;
     
+}
+
+.chatroom .acv_messages #message-textarea::placeholder{
+    padding: 0 5px;
+    font-size: 20px;
+}
+
+.chatroom .acv_messages .message-textarea2 {
+    position: absolute;
+
     float: left;
-    width: 99%;
-    height: 50%;
-    margin-left: 1%;
-    padding: 0 20px;
+    width: 96%;
+    height: 70%;
+    margin-left: 1.8%;
+    padding: 20px 20px;
     border-radius: 4px;
     border-color: #e4e4e4;
-    background: #f5f5f5;
-    transition: all 0.5s;
-    /* 去掉点击时的边框显示 */
-    outline:medium;
-    /* 固定大小 */
-    resize: none;
-}
-
-.chatroom .acv_messages .message-textarea2:focus {
-    border-color: #e4e4e4;
     background: #fff;
-    height: 70%;
-  }
-
+    transition: all 0.5s;
+    font-size: 20px;
+}
+.chatroom .acv_messages .message-textarea2 a {
+    text-decoration: underline;
+    color: rgb(210, 36, 36);
+    font-style: italic;
+}
 /* 聊天室用户 */
-.chatroom .hid_chatUser{
+.chatroom .hid_chatUser {
     position: absolute;
     /* float: right; */
-    right:  15px;
+    right: 15px;
     top: 0;
     width: 21%;
     height: 86%;
     border-radius: 10px;
     /* margin-right: 10px; */
     /* background-color: black; */
-    box-shadow: -3px 2px  5px 1px rgb(0, 0, 0,0.2);
+    box-shadow: -3px 2px 5px 1px rgb(0, 0, 0, 0.2);
     overflow: hidden;
 }
-.chatroom .hid_chatUser .chat_user{
+
+.chatroom .hid_chatUser .chat_user {
     width: 106%;
     height: 100%;
     padding: 20px;
     border-radius: 10px;
     background-image: linear-gradient(to left top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #84a4e9, #6daeec, #58b6eb, #32bfe5, #18c6d9, #2fcbc7, #54cfb2);
     /* background-color: chartreuse; */
-    overflow-x : hidden;
+    overflow-x: hidden;
 }
 
-.chatroom .chat_user h2{
+.chatroom .chat_user h2 {
     float: left;
     margin-right: 20px;
     width: 100%;
     text-align: center;
     /* background-color: red; */
 }
-.chatroom .chat_user h2 span{  
+
+.chatroom .chat_user h2 span {
     font-size: 16px;
     font-weight: 400;
 }
 
-.chatroom .chat_user .users{
+.chatroom .chat_user .users {
     margin-top: 40px;
     /* background-color: #54cfb2; */
 }
 
 
 
-.chatroom .chat_user .user{
+.chatroom .chat_user .user {
     width: 100%;
     height: 30px;
     margin-bottom: 10px;
     /* background-color: red; */
 }
 
-.chatroom .chat_user .user .nickname{
+.chatroom .chat_user .user .nickname {
     line-height: 30px;
+    /* background-color: green; */
 }
 
-.chatroom .chat_user .user .user_manager{
+
+.chatroom .chat_user .user .manager img{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.chatroom .chat_user .user .green_dot {
     float: right;
-    height: 30px;
-    width: auto;
-    margin-right: 5%;
-    /* background-color: red; */
-}
-
-.chatroom .chat_user .user .manager{
-    line-height: 30px;
-}
-
-.chatroom .chat_user .user .green_dot{
-    float: right;
-    margin-left: 20px;
     margin-top: 8px;
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    box-shadow: 2px 2px  4px 1px rgb(0, 0, 0,0.2);
+    box-shadow: 2px 2px 4px 1px rgb(0, 0, 0, 0.2);
     background-color: rgb(55, 177, 55);
-} 
-
-
-
-
-
-
-
-
+}

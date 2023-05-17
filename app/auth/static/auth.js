@@ -3,7 +3,7 @@ $(document).ready(function () {
     // 获取用户名表单
     const reg_nickname = document.querySelector('[name = register_nickname]');
     // 使用change事件  值发生变化的时候
-    reg_nickname.addEventListener('change', verifyName);
+    reg_nickname?.addEventListener('change', verifyName);
     // 封装verifyName函数
     function verifyName() {
         const span = reg_nickname.nextElementSibling;
@@ -23,7 +23,7 @@ $(document).ready(function () {
     // 获取电子邮件表单
     const reg_email = document.querySelector('[name = register_email]');
     // 使用change事件  值发生变化的时候
-    reg_email.addEventListener('change', verifyEmail);
+    reg_email?.addEventListener('change', verifyEmail);
     // 封装verifyEmail函数
     function verifyEmail() {
         const span = reg_email.nextElementSibling;
@@ -43,7 +43,7 @@ $(document).ready(function () {
     // 获取密码表单
     const reg_password = document.querySelector('[name = register_password]');
     // 使用change事件  值发生变化的时候
-    reg_password.addEventListener('change', verifyPwd);
+    reg_password?.addEventListener('change', verifyPwd);
     // 封装verifyPwd函数
     function verifyPwd() {
         const span = reg_password.nextElementSibling;
@@ -62,7 +62,7 @@ $(document).ready(function () {
     // 再次验证密码，需与第一次的密码相同
     const password2 = document.querySelector('[name = password2]');
     // 使用change事件  值发生变化的时候
-    password2.addEventListener('change', verifyConfirm);
+    password2?.addEventListener('change', verifyConfirm);
     // 封装verifyConfirm函数
     function verifyConfirm() {
         const span = password2.nextElementSibling;
@@ -78,7 +78,7 @@ $(document).ready(function () {
 
     // 勾选我同意模块后才能进行提交
     const queren = document.querySelector('[name = queren]');
-    queren.addEventListener('click', is_checked);
+    queren?.addEventListener('click', is_checked);
     function is_checked() {
         if (queren.checked) {
             return true;
@@ -92,7 +92,7 @@ $(document).ready(function () {
     // 以上全部验证通过才能进行提交
     const form = document.querySelector('form');
     // const span = queren.previousElementSibling;
-    form.addEventListener('submit', function (e) {
+    form?.addEventListener('submit', function (e) {
         // 判断是否勾选我同意
         if (!is_checked()) {
             // span.innerHTML = '请勾选同意协议';
@@ -105,25 +105,5 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
-
-
-    // // 登录模块
-    // // 点击提交模块
-    // const form = document.querySelector('form');
-    // const agree = document.querySelector('[name = agree]');
-    // const email = document.querySelector('[name = email]')
-    // form.addEventListener('submit',function(e){
-    //     // 阻止默认行为
-    //     e.preventDefault();
-    //     if(!agree.checked){
-    //         alert('请勾选同意协议');
-    //     }
-
-    //     // 记录用户名到本地存储
-    //     localStorage.setItem('email',email.value);
-
-    //     // 跳转到首页
-    //     location.href = "{{url_for('chat.index')}}";
-    // }); 
 
 });

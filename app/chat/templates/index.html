@@ -48,10 +48,9 @@
                 <textarea rows="2" id="message-textarea" placeholder="Write your message here... Enter to send"></textarea>
             <!-- 否则，显示登录、注册链接 -->
             {% else %}
-                <textarea rows="2" class="message-textarea2" placeholder="Please Sign in or Sign up to send message."></textarea>
-                <!-- <div>Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                <div class="message-textarea2">Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
                     <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
-                </div> -->
+                </div>
             {% endif %}
         </div>                         
     

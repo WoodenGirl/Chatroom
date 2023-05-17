@@ -6,7 +6,7 @@ from logging.handlers import RotatingFileHandler
 from app.chat.chat import chat_blue
 from app.auth.auth import auth_blue
 from app.extensions import db, migrate, socketio, login_manager, moment, cache, asserts
-from app.models import User, Message
+from app.models import User, Message, Room
 from app.config import config
 
 class MyApp(Flask):
@@ -120,7 +120,6 @@ def register_commands(app):
                 timestamp=fake.date_time_between('-30d', '-2d'),
             )
             db.session.add(message)
-
         db.session.commit()
         click.echo('Done.')
     

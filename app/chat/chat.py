@@ -1,4 +1,3 @@
-import numpy as np
 from flask import Blueprint, render_template, abort, request, current_app, redirect, url_for
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room

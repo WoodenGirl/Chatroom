@@ -13,8 +13,8 @@ def login():
         return redirect(url_for('chat.index'))
 
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form['log_email']
+        password = request.form['log_password']
         remember_me = request.form.get('remember', False)
 
         if remember_me:

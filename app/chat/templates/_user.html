@@ -1,19 +1,18 @@
 <div class="user">
     <!-- <div class="info"> -->
-        <!-- 头像-->
-        <img src="{{ user.avatar(30) }}">
-        <!-- 昵称 -->
-        <span class="nickname">{{ user.nickname }}</span>
+    <!-- 头像-->
+    <img src="{{ user.avatar(30) }}">
+    <!-- 昵称 -->
+    <span class="nickname">{{ user.nickname }}</span>
 
-        <div class="user_manager">
-            <!-- 管理图标 -->
-            {% if user.is_admin %}
-            <span class="manager">管理员</span>
-            {% endif %}
-            {% if user.online %}
-            <span class="green_dot"></span>
-            {% endif %}
-        </div>
-        
+    <!-- 管理图标 -->
+
+    <!-- 管理图标 -->
+    {% if user.is_admin %}
+        <span class="manager"><img src="{{url_for('static', filename='manager.png')}}" alt=""></span>
+    {% endif %}
+    {% if user.online %}
+        <span class="green_dot"></span>
+    {% endif %}
     <!-- </div> -->
 </div>
