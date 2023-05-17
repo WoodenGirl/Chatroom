@@ -18,6 +18,7 @@ $(document).ready(function () {
 
     // 客户端监听消息
     socket.on('new message', function (data) {
+        message_count++;
         if (!document.hasFocus()){   // 标签页消息提醒
             document.title = '(' + message_count + ') ' + 'ChatRoom';
         }
